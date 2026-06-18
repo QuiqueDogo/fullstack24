@@ -1,4 +1,7 @@
+import { useState, useMemo, useEffect } from "react";
 import { Input, Select, Space } from "antd";
+import debounce from "lodash.debounce";
+import Search from "antd/es/input/Search";
 
 const countries = [
     "México",
@@ -13,6 +16,21 @@ export default function UserFilters({
     onSearchChange,
     onCountryChange,
 }) {
+    const [localSearch, setLocalSearch] = useState(search);
+
+    useEffect(() => {
+        setLocalSearch(search);
+    }, [search]);
+
+    const debouncedSearch = useMemo(
+        () => debounce((value) => onSearchChange(value), 300),
+        [onSearchChange],
+    );
+
+    useEffect(() => {
+        return () => debouncedSearch.cancel();
+    }, [debouncedSearch]);
+
     return (
         <Space
             style={{
@@ -20,12 +38,14 @@ export default function UserFilters({
                 width: "100%",
             }}
         >
-            <Input
+            <Search
                 placeholder="Buscar usuario..."
-                value={search}
-                onChange={(e) =>
-                    onSearchChange(e.target.value)
-                }
+                value={localSearch}
+                allowClear
+                onChange={(e) => {
+                    setLocalSearch(e.target.value);
+                    debouncedSearch(e.target.value);
+                }}
             />
 
             <Select
