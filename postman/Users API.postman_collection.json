@@ -1,0 +1,50 @@
+{
+    "info": {
+        "name": "Users API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "users"
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Luis\",\n  \"email\": \"luis@gmail.com\",\n  \"age\": 30,\n  \"country\": \"México\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Get Users",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8000/users?page=1",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "users"
+                    ]
+                }
+            }
+        }
+    ]
+}
